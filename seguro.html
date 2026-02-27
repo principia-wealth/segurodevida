@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Principia Wealth | Proteção Patrimonial</title>
+  <style>
+    :root {
+      --brand-primary: #0f172a; /* Navy profundo */
+      --brand-accent: #1e3a8a;  
+      --bg: #f2f2f2;            /* Fundo neutro solicitado */
+      --ink: #262626;           /* Cor da fonte principal */
+      --card-bg: #ffffff;
+      --text-muted: #64748b;
+      --border: #d1d5db;
+      --success: #14532d;       
+      --danger: #7f1d1d;        /* Bordeaux/Vinho profissional */
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0;
+      font-family: 'Verdana', Geneva, sans-serif; /* Fonte solicitada */
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    header {
+      margin-bottom: 30px;
+      border-left: 6px solid var(--brand-accent);
+      padding-left: 20px;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--brand-primary);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 900px;
+      margin-bottom: 15px;
+    }
+
+    .lead-summary {
+      background: #fff;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--brand-primary);
+      font-weight: 700;
+    }
+
+    .card-body { padding: 24px; }
+
+    .form-section { margin-bottom: 32px; border-bottom: 1px solid #f3f4f6; padding-bottom: 24px; }
+    .form-section:last-child { border-bottom: none; }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand-accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
+
+    .field-group { margin-bottom: 14px; }
+
+    label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    input, select {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s;
+      color: var(--ink);
+      font-family: inherit;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--brand-accent);
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.08);
+    }
+
+    .hint { font-size: 11px; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+
+    /* Dependentes */
+    .dep-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 1.2fr 40px;
+      gap: 12px;
+      align-items: end;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .btn-remove-dep {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+    }
+
+    /* Resultados */
+    .results-card { position: sticky; top: 20px; }
+
+    .kpi {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kpi:last-child { border-bottom: none; }
+
+    .kpi-label { font-size: 14px; font-weight: 800; color: var(--brand-primary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-description { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; font-style: italic; }
+    .kpi-value { font-size: 17px; font-weight: 700; color: #000; margin-bottom: 4px; }
+    .kpi-rationale { font-size: 11px; color: var(--text-muted); margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid var(--brand-accent); }
+    
+    .gap-indicator {
+      display: block;
+      margin-top: 5px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .gap-ok { color: var(--success); }
+    .gap-deficit { color: var(--danger); }
+    .gap-surplus { color: var(--brand-accent); }
+
+    .btn-cta {
+      display: block;
+      width: calc(100% - 48px);
+      margin: 20px 24px;
+      height: 48px;
+      background: var(--brand-primary);
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-cta:hover { background: #000; transform: translateY(-1px); }
+
+    .memoria-calculo {
+      padding: 24px;
+      font-size: 11px;
+      background: #f8fafc;
+      border-top: 2px solid var(--border);
+    }
+
+    .memoria-title { font-weight: 700; margin-bottom: 14px; color: var(--brand-primary); text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 6px; letter-spacing: 0.5px; }
+    
+    .memoria-item { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dotted var(--border); padding-bottom: 4px; }
+    .memoria-item span:last-child { font-weight: 700; color: var(--brand-primary); }
+
+    .memoria-block { margin-top: 18px; margin-bottom: 18px; }
+    .memoria-subtitle { font-weight: 700; color: var(--brand-accent); text-transform: uppercase; font-size: 10px; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+    
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 2px solid var(--border);
+      font-weight: 700;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .final-note {
+      margin-top: 24px;
+      padding: 16px 24px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 1px solid var(--border);
+      height: 36px;
+      padding: 0 16px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      font-family: inherit;
+    }
+    .btn-secondary:hover { background: #f8fafc; border-color: var(--brand-accent); color: var(--brand-accent); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="title">Principia Wealth | Proteção Patrimonial</div>
+      <div class="subtitle">Segurança financeira familiar e preservação do legado patrimonial.</div>
+      <div class="lead-summary">
+        Muitas famílias percebem tarde demais que a ausência de planejamento pode consumir parte significativa do patrimônio em impostos e custos judiciais, ou forçar a venda de ativos em condições desfavoráveis. Este simulador revela exposições na sua estrutura financeira, permitindo proteger o padrão de vida dos seus dependentes e garantir a sucessão tranquila dos seus bens.
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- FORMULÁRIO -->
+      <div class="card">
+        <div class="card-header"><h2>Parâmetros Financeiros e Jurídicos</h2></div>
+        <div class="card-body">
+          
+          <div class="form-section">
+            <div class="section-title">01. Perfil Jurídico</div>
+            <div class="input-grid">
+              <div class="field-group">
+                <label>Data de Nascimento</label>
+                <input type="date" id="dob" onchange="run()">
+              </div>
+              <div class="field-group">
+                <label>Estado Civil</label>
+                <select id="marital" onchange="toggleInputs(); run();">
+                  <option value="solteiro">Solteiro(a)</option>
+                  <option value="casado">Casado(a) / União Estável</option>
+                  <option value="divorciado">Divorciado(a)</option>
+                  <option value="viuvo">Viúvo(a)</option>
+                </select>
+              </div>
+            </div>
+            <div id="regimeWrap" class="field-group hidden" style="margin-top:12px;">
+              <label>Regime de Bens</label>
+              <select id="regime" onchange="toggleInputs(); run()">
+                <option value="parcial">Comunhão Parcial (Regra Geral)</option>
+                <option value="universal">Comunhão Universal</option>
+                <option value="separacao_total">Separação Total de Bens</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-title">02. Gestão de Fluxo de Caixa</div>
+            <div class="input-grid">
+              <div class="field-group" style="grid-column: span 2;">
+                <label>Custo de Sua Responsabilidade (R$)</label>
+                <input type="text" id="ownCost" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">Valor mensal necessário para garantir os seus compromissos financeiros e o padrão de vida da família em cenários de afastamento por invalidez ou incapacidade temporária.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-title">03. Inventário Patrimonial</div>
+            
+            <div class="input-grid">
+              <div class="field-group" id="pOwnWrap">
+                <label>Bens Móveis e Imóveis Particulares (R$)</label>
+                <input type="text" id="pOwn" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">Ativos exclusivos detidos antes da união ou recebidos por doação/herança.</div>
+              </div>
+              <div class="field-group" id="pCommonWrap">
+                <label>Bens Móveis e Imóveis Comuns (R$)</label>
+                <input type="text" id="pCommon" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">Ativos totais adquiridos onerosamente pelo casal durante a união.</div>
+              </div>
+            </div>
+
+            <div class="input-grid" style="margin-top:16px;">
+              <div class="field-group" id="fOwnWrap">
+                <label>Bens Financeiros Particulares (R$)</label>
+                <input type="text" id="fOwn" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">Investimentos e liquidez individual (Exclui Previdência).</div>
+              </div>
+              <div class="field-group" id="fCommonWrap">
+                <label>Bens Financeiros Comuns (R$)</label>
+                <input type="text" id="fCommon" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">Aplicações financeiras em conjunto ou comunicáveis (Exclui Previdência).</div>
+              </div>
+            </div>
+
+            <div class="input-grid" style="margin-top:16px;">
+              <div class="field-group">
+                <label>Previdência Privada (R$)</label>
+                <input type="text" id="prev" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">VGBL/PGBL (Recurso fora de inventário na maioria dos casos).</div>
+              </div>
+              <div class="field-group">
+                <label>FGTS (R$)</label>
+                <input type="text" id="fgts" class="currency" placeholder="0,00" oninput="run()">
+                <div class="hint">Saldo total disponível para sucessão direta aos herdeiros.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-title">04. Beneficiários e Dependentes</div>
+            <div id="depsList"></div>
+            <button class="btn-secondary" id="addDepBtn">+ Adicionar Dependente</button>
+          </div>
+
+          <div class="form-section">
+            <div class="section-title">05. Coberturas Vigentes</div>
+            <div class="input-grid">
+              <div class="field-group">
+                <label>Seguro de Morte (R$)</label>
+                <input type="text" id="curDeath" class="currency" placeholder="0,00" oninput="run()">
+              </div>
+              <div class="field-group">
+                <label>Seguro de Invalidez (R$)</label>
+                <input type="text" id="curDisability" class="currency" placeholder="0,00" oninput="run()">
+              </div>
+            </div>
+            <div class="input-grid" style="margin-top:12px;">
+              <div class="field-group">
+                <label>Doenças Graves (R$)</label>
+                <input type="text" id="curCritical" class="currency" placeholder="0,00" oninput="run()">
+              </div>
+              <div class="field-group">
+                <label>Diárias de Internação (R$/dia)</label>
+                <input type="text" id="curDaily" class="currency" placeholder="0,00" oninput="run()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULTADOS -->
+      <div class="card results-card">
+        <div class="card-header"><h2>Resultados da Simulação</h2></div>
+        <div id="resultContent">
+          <div class="kpi">
+            <div class="kpi-label">Proteção Sucessória (Morte)</div>
+            <div class="kpi-description">Morte por Qualquer Causa: liquidação de inventário e amparo familiar.</div>
+            <div class="kpi-value" id="outDeath">R$ 0,00</div>
+            <div id="gapDeath"></div>
+            <div class="kpi-rationale" id="ratDeath">Necessidade para custos de inventário e provisão de dependentes.</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">Proteção em Vida (Invalidez)</div>
+            <div class="kpi-description">Invalidez Permanente Total ou Parcial: substituição de rendimento por incapacidade.</div>
+            <div class="kpi-value" id="outDisability">R$ 0,00</div>
+            <div id="gapDisability"></div>
+            <div class="kpi-rationale" id="ratDisability">Manutenção de padrão de vida descontando ativos financeiros.</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">Proteção de Saúde (Doenças Graves)</div>
+            <div class="kpi-description">Pagamento imediato em caso de diagnósticos críticos.</div>
+            <div class="kpi-value" id="outCritical">R$ 0,00</div>
+            <div id="gapCritical"></div>
+            <div class="kpi-rationale" id="ratCritical">Aguardando dados...</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">Diárias de Internação</div>
+            <div class="kpi-description">Suporte financeiro hospitalar baseado em sua necessidade diária.</div>
+            <div class="kpi-value" id="outDaily">R$ 0,00</div>
+            <div id="gapDaily"></div>
+          </div>
+        </div>
+
+        <a href="https://form.jotform.com/251656907243057" target="_blank" class="btn-cta">Agende uma Reunião</a>
+
+        <div class="memoria-calculo" id="memoria">
+          <div class="memoria-title">Memorial de Cálculo & Racional</div>
+          <div id="memoriaContent">Insira os parâmetros no formulário para visualizar a análise técnica.</div>
+        </div>
+        
+        <div class="final-note">
+          * Os valores apresentados são projeções estimadas com base nas informações fornecidas. É imprescindível a consulta com um advogado especializado para validar o cenário matrimonial específico, bem como a validação destas contas com um profissional de seguros. As premissas sucessórias adotam a alíquota máxima de ITCMD (8,00%) e um percentual padrão para inventário e honorários (7,00%), refletindo as práticas de mercado.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const RATE = 0.0033; // 0,33% a.m. real
+    const MAX_AGE = 90;
+    let deps = [];
+
+    function formatBRL(v) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
+    }
+
+    function parseBRL(v) {
+      if (!v) return 0;
+      let clean = v.replace(/[^\d,]/g, '').replace(',', '.');
+      return parseFloat(clean) || 0;
+    }
+
+    function applyCurrencyMask(el) {
+      let val = el.value.replace(/\D/g, "");
+      if (!val) { el.value = ""; return; }
+      val = (parseFloat(val) / 100).toFixed(2);
+      el.value = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(val);
+    }
+
+    document.querySelectorAll('.currency').forEach(inp => {
+      inp.addEventListener('input', (e) => {
+        applyCurrencyMask(e.target);
+        setTimeout(run, 10);
+      });
+    });
+
+    function toggleInputs() {
+      const marital = document.getElementById('marital').value;
+      const regime = document.getElementById('regime').value;
+      const isMarried = (marital === 'casado');
+      
+      document.getElementById('regimeWrap').classList.toggle('hidden', !isMarried);
+      
+      const pOwn = document.getElementById('pOwnWrap');
+      const fOwn = document.getElementById('fOwnWrap');
+      const pCommon = document.getElementById('pCommonWrap');
+      const fCommon = document.getElementById('fCommonWrap');
+
+      if (!isMarried) {
+        pCommon.classList.add('hidden'); fCommon.classList.add('hidden');
+        pOwn.classList.remove('hidden'); fOwn.classList.remove('hidden');
+      } else {
+        if (regime === 'separacao_total') {
+          pCommon.classList.add('hidden'); fCommon.classList.add('hidden');
+          pOwn.classList.remove('hidden'); fOwn.classList.remove('hidden');
+        } else if (regime === 'universal') {
+          pOwn.classList.add('hidden'); fOwn.classList.add('hidden');
+          pCommon.classList.remove('hidden'); fCommon.classList.remove('hidden');
+        } else {
+          pOwn.classList.remove('hidden'); fOwn.classList.remove('hidden');
+          pCommon.classList.remove('hidden'); fCommon.classList.remove('hidden');
+        }
+      }
+    }
+
+    function renderDeps() {
+      const container = document.getElementById('depsList');
+      container.innerHTML = '';
+      deps.forEach((d, idx) => {
+        const div = document.createElement('div');
+        div.className = 'dep-row';
+        div.innerHTML = `
+          <div class="field-group" style="margin-bottom:0">
+            <label>Parentesco</label>
+            <select onchange="updateDep(${idx}, 'type', this.value)">
+              <option value="filho" ${d.type==='filho'?'selected':''}>Filho(a)</option>
+              <option value="conjuge" ${d.type==='conjuge'?'selected':''}>Cônjuge</option>
+              <option value="pai" ${d.type==='pai'?'selected':''}>Pai / Mãe</option>
+            </select>
+          </div>
+          <div class="field-group" style="margin-bottom:0">
+            <label>Idade Atual</label>
+            <input type="number" value="${d.age}" oninput="updateDep(${idx}, 'age', this.value)">
+          </div>
+          <div class="field-group" style="margin-bottom:0">
+            <label>Necessidade Mensal</label>
+            <input type="text" class="currency" data-idx="${idx}" value="${new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(d.need)}" oninput="updateDepCurr(this)">
+          </div>
+          <button class="btn-remove-dep" onclick="removeDep(${idx})">×</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.addDepBtn.onclick = () => { deps.push({ type: 'filho', age: 10, need: 0 }); renderDeps(); run(); };
+    window.removeDep = (i) => { deps.splice(i, 1); renderDeps(); run(); };
+    window.updateDep = (i, f, v) => { deps[i][f] = v; run(); };
+    window.updateDepCurr = (el) => {
+      applyCurrencyMask(el);
+      const idx = el.getAttribute('data-idx');
+      deps[idx].need = parseBRL(el.value);
+      setTimeout(run, 10);
+    };
+
+    function pv(payment, rate, n) {
+      if (n <= 0 || payment <= 0) return 0;
+      return payment * (1 - Math.pow(1 + rate, -n)) / rate;
+    }
+
+    function run() {
+      const dobVal = document.getElementById('dob').value;
+      if (!dobVal) return;
+
+      const birth = new Date(dobVal);
+      const today = new Date();
+      let ageNow = today.getFullYear() - birth.getFullYear();
+      if (today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate())) ageNow--;
+      
+      const nMonths = Math.max(0, (MAX_AGE - ageNow) * 12);
+
+      const ownCost = parseBRL(document.getElementById('ownCost').value);
+      const marital = document.getElementById('marital').value;
+      const regime = document.getElementById('regime').value;
+
+      const pOwnVal = !document.getElementById('pOwnWrap').classList.contains('hidden') ? parseBRL(document.getElementById('pOwn').value) : 0;
+      const pCommonVal = !document.getElementById('pCommonWrap').classList.contains('hidden') ? parseBRL(document.getElementById('pCommon').value) : 0;
+      const fOwnVal = !document.getElementById('fOwnWrap').classList.contains('hidden') ? parseBRL(document.getElementById('fOwn').value) : 0;
+      const fCommonVal = !document.getElementById('fCommonWrap').classList.contains('hidden') ? parseBRL(document.getElementById('fCommon').value) : 0;
+      const prevVal = parseBRL(document.getElementById('prev').value);
+      const fgtsVal = parseBRL(document.getElementById('fgts').value);
+
+      const curDeath = parseBRL(document.getElementById('curDeath').value);
+      const curDis = parseBRL(document.getElementById('curDisability').value);
+      const curCrit = parseBRL(document.getElementById('curCritical').value);
+      const curDaily = parseBRL(document.getElementById('curDaily').value);
+
+      let monteMor = 0;
+      let labelRegime = "";
+      let htmlBaseCalculo = "";
+
+      if (marital === 'casado') {
+        if (regime === 'parcial') {
+          monteMor = (pOwnVal + fOwnVal) + (pCommonVal + fCommonVal) * 0.5;
+          labelRegime = "Comunhão Parcial: Herança sobre Particulares + 50% dos Bens Comuns.";
+          htmlBaseCalculo = `
+            <div class="memoria-item"><span>+ Bens Móveis e Imóveis Particulares</span><span>${formatBRL(pOwnVal)}</span></div>
+            <div class="memoria-item"><span>+ Bens Financeiros Particulares</span><span>${formatBRL(fOwnVal)}</span></div>
+            <div class="memoria-item"><span>+ 50% Bens Móveis e Imóveis Comuns (Meação)</span><span>${formatBRL(pCommonVal * 0.5)}</span></div>
+            <div class="memoria-item"><span>+ 50% Bens Financeiros Comuns (Meação)</span><span>${formatBRL(fCommonVal * 0.5)}</span></div>
+          `;
+        } else if (regime === 'universal') {
+          monteMor = (pCommonVal + fCommonVal) * 0.5;
+          labelRegime = "Comunhão Universal: Herança sobre 50% da Totalidade (Meação).";
+          htmlBaseCalculo = `
+            <div class="memoria-item"><span>+ 50% Bens Móveis e Imóveis Comuns (Meação)</span><span>${formatBRL(pCommonVal * 0.5)}</span></div>
+            <div class="memoria-item"><span>+ 50% Bens Financeiros Comuns (Meação)</span><span>${formatBRL(fCommonVal * 0.5)}</span></div>
+          `;
+        } else {
+          monteMor = (pOwnVal + fOwnVal);
+          labelRegime = "Separação Total: Herança sobre 100% dos Bens Particulares.";
+          htmlBaseCalculo = `
+            <div class="memoria-item"><span>+ Bens Móveis e Imóveis Particulares</span><span>${formatBRL(pOwnVal)}</span></div>
+            <div class="memoria-item"><span>+ Bens Financeiros Particulares</span><span>${formatBRL(fOwnVal)}</span></div>
+          `;
+        }
+      } else {
+        monteMor = pOwnVal + fOwnVal;
+        labelRegime = "Indivíduo sem comunhão: Herança sobre 100% do patrimônio registrado.";
+        htmlBaseCalculo = `
+          <div class="memoria-item"><span>+ Bens Móveis e Imóveis Particulares</span><span>${formatBRL(pOwnVal)}</span></div>
+          <div class="memoria-item"><span>+ Bens Financeiros Particulares</span><span>${formatBRL(fOwnVal)}</span></div>
+        `;
+      }
+      
+      const itcmd = monteMor * 0.08;
+      const invCustos = monteMor * 0.07;
+      const totalSucessorio = itcmd + invCustos;
+
+      let needDeps = 0;
+      let htmlDeps = "";
+      deps.forEach(d => {
+        let limit = d.type === 'filho' ? 25 : 90;
+        let m = Math.max(0, (limit - d.age) * 12);
+        let valVP = pv(d.need, RATE, m);
+        needDeps += valVP;
+        let labelDep = d.type === 'filho' ? 'Filho(a)' : d.type === 'conjuge' ? 'Cônjuge' : 'Pai/Mãe';
+        htmlDeps += `<div class="memoria-item"><span>+ Suporte Financeiro ${labelDep} (${m} meses)</span><span>${formatBRL(valVP)}</span></div>`;
+      });
+
+      const totalDeath = totalSucessorio + needDeps;
+      const vpRendaVida = pv(ownCost, RATE, nMonths);
+      const liquidezAbatimento = fOwnVal + (fCommonVal * 0.5) + prevVal + fgtsVal;
+      const needDisability = Math.max(0, vpRendaVida - liquidezAbatimento);
+      const targetCrit = ownCost * 24;
+      const targetDaily = ownCost / 30;
+
+      document.getElementById('outDeath').innerText = formatBRL(totalDeath);
+      document.getElementById('outDisability').innerText = formatBRL(needDisability);
+      document.getElementById('outCritical').innerText = formatBRL(targetCrit);
+      document.getElementById('outDaily').innerText = formatBRL(targetDaily) + "/dia";
+
+      renderGap('gapDeath', totalDeath, curDeath);
+      renderGap('gapDisability', needDisability, curDis); 
+      renderGap('gapCritical', targetCrit, curCrit);
+      renderGap('gapDaily', targetDaily, curDaily, true);
+
+      document.getElementById('ratCritical').innerText = "A cobertura de 24 meses garante o limite técnico de reabilitação antes da cronicidade, conforme padrões da SSA e DWP.";
+
+      document.getElementById('ratDeath').innerHTML = `
+        Encargos Sucessórios: <strong>${formatBRL(totalSucessorio)}</strong><br>
+        Provisão de Dependentes: <strong>${formatBRL(needDeps)}</strong>
+      `;
+
+      document.getElementById('memoriaContent').innerHTML = `
+        <div class="memoria-block">
+          <span class="memoria-subtitle">I. Base de Cálculo para ITCMD e Inventário</span>
+          ${htmlBaseCalculo}
+          <div class="total-line"><span>= Base Tributável Estimada</span><span>${formatBRL(monteMor)}</span></div>
+        </div>
+
+        <div class="memoria-block">
+          <span class="memoria-subtitle">II. Estrutura Sucessória</span>
+          <div class="memoria-item"><span>+ ITCMD (8,00% sobre a base tributável)</span><span>${formatBRL(itcmd)}</span></div>
+          <div class="memoria-item"><span>+ Inventário e Custos (7,00% sobre a base tributável)</span><span>${formatBRL(invCustos)}</span></div>
+          ${htmlDeps}
+          <div class="total-line"><span>= Necessidade Sucessória Total</span><span>${formatBRL(totalDeath)}</span></div>
+          <div class="hint" style="margin-top:5px;">${labelRegime}</div>
+        </div>
+
+        <div class="memoria-block">
+          <span class="memoria-subtitle">III. Manutenção de Padrão de Vida (Invalidez)</span>
+          <div class="memoria-item"><span>+ Projeção de Fluxo (${nMonths} meses)</span><span>${formatBRL(vpRendaVida)}</span></div>
+          <div class="memoria-item"><span>- Bens Financeiros Particulares</span><span>${formatBRL(fOwnVal)}</span></div>
+          <div class="memoria-item"><span>- Meação Financeira sobre Bens Comuns</span><span>${formatBRL(fCommonVal * 0.5)}</span></div>
+          <div class="memoria-item"><span>- Previdência Privada + FGTS</span><span>${formatBRL(prevVal + fgtsVal)}</span></div>
+          <div class="total-line"><span>= Necessidade de Capital Segurado</span><span>${formatBRL(needDisability)}</span></div>
+        </div>
+      `;
+    }
+
+    function renderGap(id, need, cur, isDaily = false) {
+      const el = document.getElementById(id);
+      const diff = need - cur;
+      const fmtVal = formatBRL(Math.abs(diff)) + (isDaily ? '/dia' : '');
+      
+      if (diff <= 0) {
+        el.className = 'gap-indicator gap-surplus';
+        el.innerText = `COBERTURA SOBREVALORIZADA (EXCEDENTE: ${fmtVal})`;
+      } else {
+        el.className = 'gap-indicator gap-deficit';
+        el.innerText = `DÉFICIT DE COBERTURA: ${fmtVal}`;
+      }
+    }
+
+    toggleInputs();
+  </script>
+</body>
+</html>
